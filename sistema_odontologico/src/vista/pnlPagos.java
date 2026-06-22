@@ -125,25 +125,45 @@ public class pnlPagos extends javax.swing.JPanel {
 
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
         // TODO add your handling code here:
+        DAO.DaoPago dao = new DAO.DaoPago();
+        java.util.List<Modelo.PagoModelo> listaPagos = dao.listarTodos();
+
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tblPagos.getModel();
+        modelo.setRowCount(0); // Limpia la tabla actual
+
+        for (Modelo.PagoModelo p : listaPagos) {
+            modelo.addRow(new Object[]{
+                p.getNombrePaciente(), 
+                p.getMonto(), 
+                p.getTipoPago(), 
+                p.getFecha()
+            });
+        }
     }//GEN-LAST:event_btnListarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        String nombreBuscado = txtNombre.getText();
-        DAO.DaoPago dao = new DAO.DaoPago();
-        java.util.List<Modelo.PagoModelo> listaPagos = dao.buscarPorNombre(nombreBuscado);
+        String nombreBuscado = txtNombre.getText().trim(); 
 
-        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tblPagos.getModel();
-        modelo.setRowCount(0);
+            if (nombreBuscado.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Por favor, llene el campo obligatorio para buscar.", "Atención", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return; 
+            }
 
-        for (Modelo.PagoModelo p : listaPagos) {
-            modelo.addRow(new Object[]{
-                p.getNombrePaciente(),
-                p.getMonto(),
-                p.getTipoPago(),
-                p.getFecha()
-            });
-        }
+            DAO.DaoPago dao = new DAO.DaoPago();
+            java.util.List<Modelo.PagoModelo> listaPagos = dao.buscarPorNombre(nombreBuscado);
+
+            javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tblPagos.getModel();
+            modelo.setRowCount(0); // Limpia la tabla
+
+            for (Modelo.PagoModelo p : listaPagos) {
+                modelo.addRow(new Object[]{
+                    p.getNombrePaciente(), 
+                    p.getMonto(), 
+                    p.getTipoPago(), 
+                    p.getFecha()
+                });
+            }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
 
