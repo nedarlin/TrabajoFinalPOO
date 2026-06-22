@@ -4,6 +4,13 @@
  */
 package vista;
 
+import DAO.DaoPacienteCita;
+import Modelo.PacienteCita;
+import Conexion.Conection;
+import java.sql.Connection;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author USUARIO
@@ -35,8 +42,8 @@ public class pnlInicio extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         btnListar = new javax.swing.JButton();
         panelCentroDashboard = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblCitasHoy = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblPacientes = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.BorderLayout());
@@ -113,46 +120,31 @@ public class pnlInicio extends javax.swing.JPanel {
 
         panelCentroDashboard.setBackground(new java.awt.Color(255, 255, 255));
 
-        tblCitasHoy.setModel(new javax.swing.table.DefaultTableModel(
+        tblPacientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Fecha", "Nombre", "Motivo", "Estado"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(tblCitasHoy);
+        ));
+        jScrollPane2.setViewportView(tblPacientes);
 
         javax.swing.GroupLayout panelCentroDashboardLayout = new javax.swing.GroupLayout(panelCentroDashboard);
         panelCentroDashboard.setLayout(panelCentroDashboardLayout);
         panelCentroDashboardLayout.setHorizontalGroup(
             panelCentroDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 638, Short.MAX_VALUE)
-            .addGroup(panelCentroDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelCentroDashboardLayout.createSequentialGroup()
-                    .addGap(5, 5, 5)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 627, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGroup(panelCentroDashboardLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 626, Short.MAX_VALUE)
+                .addContainerGap())
         );
         panelCentroDashboardLayout.setVerticalGroup(
             panelCentroDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 375, Short.MAX_VALUE)
-            .addGroup(panelCentroDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelCentroDashboardLayout.createSequentialGroup()
-                    .addGap(21, 21, 21)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(21, Short.MAX_VALUE)))
+            .addGroup(panelCentroDashboardLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         panelContenido.add(panelCentroDashboard, java.awt.BorderLayout.CENTER);
@@ -162,6 +154,34 @@ public class pnlInicio extends javax.swing.JPanel {
 
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
         // TODO add your handling code here:
+        try {
+            Connection con = Conexion.Conection.getConnection();
+            DaoPacienteCita dao = new DaoPacienteCita(con);
+
+            List<PacienteCita> lista = dao.listarPacienteCita();
+
+            // Crear modelo nuevo con columnas
+            DefaultTableModel modelo = new DefaultTableModel(
+                    new Object[]{"Fecha", "Nombre", "Motivo", "Estado"}, 0
+            );
+
+            // Agregar filas
+            for (PacienteCita pc : lista) {
+                modelo.addRow(new Object[]{
+                    pc.getFechaRegistro(),
+                    pc.getNombrePaciente(),
+                    pc.getMotivo(),
+                    pc.getEstado()
+                });
+            }
+
+            // Asignar modelo a la JTable
+            tblPacientes.setModel(modelo);
+
+            System.out.println("✅ Se cargaron " + lista.size() + " registros.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btnListarActionPerformed
 
 
@@ -170,12 +190,12 @@ public class pnlInicio extends javax.swing.JPanel {
     private javax.swing.JButton btnListar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel panelCabecera;
     private javax.swing.JPanel panelCentroDashboard;
     private javax.swing.JPanel panelContenido;
-    private javax.swing.JTable tblCitasHoy;
+    private javax.swing.JTable tblPacientes;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }

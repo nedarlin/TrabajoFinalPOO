@@ -1,16 +1,22 @@
 package vista;
 
+import DAO.DaoPacienteCita;
+import Modelo.PacienteCita;
+import Conexion.Conection;
+import java.sql.Connection;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author USUARIO
  */
 public class vtnPrincipal extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(vtnPrincipal.class.getName());
 
     /**
@@ -30,16 +36,7 @@ public class vtnPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         panelContenido = new javax.swing.JPanel();
-        panelCabecera = new javax.swing.JPanel();
-        lblTitulo = new javax.swing.JLabel();
-        btnBuscar = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JTextField();
-        panelCentroDashboard = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblCitasHoy = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        btnListar = new javax.swing.JButton();
         panelNavegacion = new javax.swing.JPanel();
         btnInicio = new javax.swing.JButton();
         btnPacientes = new javax.swing.JButton();
@@ -54,109 +51,10 @@ public class vtnPrincipal extends javax.swing.JFrame {
         panelContenido.setForeground(new java.awt.Color(30, 30, 30));
         panelContenido.setLayout(new java.awt.BorderLayout());
 
-        panelCabecera.setBackground(new java.awt.Color(255, 255, 255));
-
-        lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblTitulo.setForeground(new java.awt.Color(0, 0, 0));
-        lblTitulo.setText("Bienvenido");
-
-        btnBuscar.setBackground(new java.awt.Color(30, 42, 70));
-        btnBuscar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
-        btnBuscar.setText("Buscar");
-
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Nombre:");
-
-        javax.swing.GroupLayout panelCabeceraLayout = new javax.swing.GroupLayout(panelCabecera);
-        panelCabecera.setLayout(panelCabeceraLayout);
-        panelCabeceraLayout.setHorizontalGroup(
-            panelCabeceraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelCabeceraLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCabeceraLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
-                .addComponent(btnBuscar)
-                .addGap(80, 80, 80))
-        );
-        panelCabeceraLayout.setVerticalGroup(
-            panelCabeceraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelCabeceraLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblTitulo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addGroup(panelCabeceraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBuscar)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17))
-        );
-
-        panelContenido.add(panelCabecera, java.awt.BorderLayout.PAGE_START);
-
-        panelCentroDashboard.setBackground(new java.awt.Color(255, 255, 255));
-
-        tblCitasHoy.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Fecha", "Nombre", "Motivo", "Estado"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(tblCitasHoy);
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("Pacientes");
-
-        btnListar.setBackground(new java.awt.Color(30, 42, 70));
-        btnListar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnListar.setForeground(new java.awt.Color(255, 255, 255));
-        btnListar.setText("Listar");
-        btnListar.addActionListener(this::btnListarActionPerformed);
-
-        javax.swing.GroupLayout panelCentroDashboardLayout = new javax.swing.GroupLayout(panelCentroDashboard);
-        panelCentroDashboard.setLayout(panelCentroDashboardLayout);
-        panelCentroDashboardLayout.setHorizontalGroup(
-            panelCentroDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 627, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(panelCentroDashboardLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnListar))
-        );
-        panelCentroDashboardLayout.setVerticalGroup(
-            panelCentroDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelCentroDashboardLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelCentroDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnListar))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        panelContenido.add(panelCentroDashboard, java.awt.BorderLayout.CENTER);
+        jLabel1.setText("BIENVENIDO");
+        panelContenido.add(jLabel1, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(panelContenido, java.awt.BorderLayout.CENTER);
 
@@ -268,10 +166,6 @@ public class vtnPrincipal extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnListarActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -298,22 +192,13 @@ public class vtnPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnInicio;
     private javax.swing.JButton btnInventario;
-    private javax.swing.JButton btnListar;
     private javax.swing.JButton btnPacientes;
     private javax.swing.JButton btnPagos;
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblTitulo;
-    private javax.swing.JPanel panelCabecera;
-    private javax.swing.JPanel panelCentroDashboard;
     private javax.swing.JPanel panelContenido;
     private javax.swing.JPanel panelNavegacion;
-    private javax.swing.JTable tblCitasHoy;
-    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }
