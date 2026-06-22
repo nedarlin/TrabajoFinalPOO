@@ -32,20 +32,20 @@ public class vtnPrincipal extends javax.swing.JFrame {
         panelContenido = new javax.swing.JPanel();
         panelCabecera = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
         panelCentroDashboard = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCitasHoy = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        btnListar = new javax.swing.JButton();
         panelNavegacion = new javax.swing.JPanel();
-        btnDashboard = new javax.swing.JButton();
+        btnInicio = new javax.swing.JButton();
         btnPacientes = new javax.swing.JButton();
-        btnCitas = new javax.swing.JButton();
-        btnTratamiento = new javax.swing.JButton();
         btnInventario = new javax.swing.JButton();
         btnPagos = new javax.swing.JButton();
-        btnRecetas = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(" Sistema de Control Odontologico");
@@ -58,17 +58,15 @@ public class vtnPrincipal extends javax.swing.JFrame {
 
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(0, 0, 0));
-        lblTitulo.setText("Dashboard-Resumen");
+        lblTitulo.setText("Bienvenido");
 
-        jButton1.setBackground(new java.awt.Color(30, 42, 70));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Nueva cita");
+        btnBuscar.setBackground(new java.awt.Color(30, 42, 70));
+        btnBuscar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscar.setText("Buscar");
 
-        jButton2.setBackground(new java.awt.Color(30, 42, 70));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Registar pago");
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("Nombre:");
 
         javax.swing.GroupLayout panelCabeceraLayout = new javax.swing.GroupLayout(panelCabecera);
         panelCabecera.setLayout(panelCabeceraLayout);
@@ -77,21 +75,27 @@ public class vtnPrincipal extends javax.swing.JFrame {
             .addGroup(panelCabeceraLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56)
-                .addComponent(jButton1)
-                .addGap(63, 63, 63)
-                .addComponent(jButton2)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCabeceraLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addComponent(btnBuscar)
+                .addGap(80, 80, 80))
         );
         panelCabeceraLayout.setVerticalGroup(
             panelCabeceraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCabeceraLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addContainerGap()
+                .addComponent(lblTitulo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(panelCabeceraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTitulo)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(51, Short.MAX_VALUE))
+                    .addComponent(btnBuscar)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17))
         );
 
         panelContenido.add(panelCabecera, java.awt.BorderLayout.PAGE_START);
@@ -106,7 +110,7 @@ public class vtnPrincipal extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Hora", "Paciente", "Motivo", "Estado"
+                "Fecha", "Nombre", "Motivo", "Estado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -121,7 +125,13 @@ public class vtnPrincipal extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("Citas para hoy:");
+        jLabel1.setText("Pacientes");
+
+        btnListar.setBackground(new java.awt.Color(30, 42, 70));
+        btnListar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnListar.setForeground(new java.awt.Color(255, 255, 255));
+        btnListar.setText("Listar");
+        btnListar.addActionListener(this::btnListarActionPerformed);
 
         javax.swing.GroupLayout panelCentroDashboardLayout = new javax.swing.GroupLayout(panelCentroDashboard);
         panelCentroDashboard.setLayout(panelCentroDashboardLayout);
@@ -130,13 +140,17 @@ public class vtnPrincipal extends javax.swing.JFrame {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 627, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(panelCentroDashboardLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnListar))
         );
         panelCentroDashboardLayout.setVerticalGroup(
             panelCentroDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCentroDashboardLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelCentroDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnListar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -150,16 +164,16 @@ public class vtnPrincipal extends javax.swing.JFrame {
         panelNavegacion.setPreferredSize(new java.awt.Dimension(250, 100));
         panelNavegacion.setLayout(new java.awt.GridLayout(7, 1));
 
-        btnDashboard.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnDashboard.setForeground(new java.awt.Color(255, 255, 255));
-        btnDashboard.setText("Dashboard");
-        btnDashboard.setBorderPainted(false);
-        btnDashboard.setContentAreaFilled(false);
-        btnDashboard.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnDashboard.setFocusPainted(false);
-        btnDashboard.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnDashboard.addActionListener(this::btnDashboardActionPerformed);
-        panelNavegacion.add(btnDashboard);
+        btnInicio.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnInicio.setForeground(new java.awt.Color(255, 255, 255));
+        btnInicio.setText("Inicio");
+        btnInicio.setBorderPainted(false);
+        btnInicio.setContentAreaFilled(false);
+        btnInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnInicio.setFocusPainted(false);
+        btnInicio.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnInicio.addActionListener(this::btnInicioActionPerformed);
+        panelNavegacion.add(btnInicio);
 
         btnPacientes.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnPacientes.setForeground(new java.awt.Color(255, 255, 255));
@@ -171,28 +185,6 @@ public class vtnPrincipal extends javax.swing.JFrame {
         btnPacientes.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnPacientes.addActionListener(this::btnPacientesActionPerformed);
         panelNavegacion.add(btnPacientes);
-
-        btnCitas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnCitas.setForeground(new java.awt.Color(255, 255, 255));
-        btnCitas.setText("Citas");
-        btnCitas.setBorderPainted(false);
-        btnCitas.setContentAreaFilled(false);
-        btnCitas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnCitas.setFocusPainted(false);
-        btnCitas.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnCitas.addActionListener(this::btnCitasActionPerformed);
-        panelNavegacion.add(btnCitas);
-
-        btnTratamiento.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnTratamiento.setForeground(new java.awt.Color(255, 255, 255));
-        btnTratamiento.setText("Tratamiento");
-        btnTratamiento.setBorderPainted(false);
-        btnTratamiento.setContentAreaFilled(false);
-        btnTratamiento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnTratamiento.setFocusPainted(false);
-        btnTratamiento.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnTratamiento.addActionListener(this::btnTratamientoActionPerformed);
-        panelNavegacion.add(btnTratamiento);
 
         btnInventario.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnInventario.setForeground(new java.awt.Color(255, 255, 255));
@@ -216,16 +208,16 @@ public class vtnPrincipal extends javax.swing.JFrame {
         btnPagos.addActionListener(this::btnPagosActionPerformed);
         panelNavegacion.add(btnPagos);
 
-        btnRecetas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnRecetas.setForeground(new java.awt.Color(255, 255, 255));
-        btnRecetas.setText("Recetas");
-        btnRecetas.setBorderPainted(false);
-        btnRecetas.setContentAreaFilled(false);
-        btnRecetas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnRecetas.setFocusPainted(false);
-        btnRecetas.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnRecetas.addActionListener(this::btnRecetasActionPerformed);
-        panelNavegacion.add(btnRecetas);
+        btnSalir.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnSalir.setForeground(new java.awt.Color(255, 255, 255));
+        btnSalir.setText("Salir");
+        btnSalir.setBorderPainted(false);
+        btnSalir.setContentAreaFilled(false);
+        btnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSalir.setFocusPainted(false);
+        btnSalir.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnSalir.addActionListener(this::btnSalirActionPerformed);
+        panelNavegacion.add(btnSalir);
 
         getContentPane().add(panelNavegacion, java.awt.BorderLayout.WEST);
 
@@ -244,32 +236,14 @@ public class vtnPrincipal extends javax.swing.JFrame {
         panelContenido.repaint();
     }//GEN-LAST:event_btnPacientesActionPerformed
 
-    private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
+    private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
         // TODO add your handling code here:
-        vista.pnlDashboard panelDash = new vista.pnlDashboard();
+        vista.pnlInicio panelDash = new vista.pnlInicio();
         panelContenido.removeAll();
         panelContenido.add(panelDash, java.awt.BorderLayout.CENTER);
         panelContenido.revalidate();
         panelContenido.repaint();
-    }//GEN-LAST:event_btnDashboardActionPerformed
-
-    private void btnCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCitasActionPerformed
-        // TODO add your handling code here:
-        vista.pnlCitas panelCitas = new vista.pnlCitas();
-        panelContenido.removeAll();
-        panelContenido.add(panelCitas, java.awt.BorderLayout.CENTER);
-        panelContenido.revalidate();
-        panelContenido.repaint();
-    }//GEN-LAST:event_btnCitasActionPerformed
-
-    private void btnTratamientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTratamientoActionPerformed
-        // TODO add your handling code here:
-        vista.pnlTratamiento panelTratamiento = new vista.pnlTratamiento();
-        panelContenido.removeAll();
-        panelContenido.add(panelTratamiento, java.awt.BorderLayout.CENTER);
-        panelContenido.revalidate();
-        panelContenido.repaint();
-    }//GEN-LAST:event_btnTratamientoActionPerformed
+    }//GEN-LAST:event_btnInicioActionPerformed
 
     private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
         // TODO add your handling code here:
@@ -289,14 +263,14 @@ public class vtnPrincipal extends javax.swing.JFrame {
         panelContenido.repaint();
     }//GEN-LAST:event_btnPagosActionPerformed
 
-    private void btnRecetasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecetasActionPerformed
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
-        vista.pnlRecetas panelRecetas = new vista.pnlRecetas();
-        panelContenido.removeAll();
-        panelContenido.add(panelRecetas, java.awt.BorderLayout.CENTER);
-        panelContenido.revalidate();
-        panelContenido.repaint();
-    }//GEN-LAST:event_btnRecetasActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnListarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -324,16 +298,15 @@ public class vtnPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCitas;
-    private javax.swing.JButton btnDashboard;
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnInicio;
     private javax.swing.JButton btnInventario;
+    private javax.swing.JButton btnListar;
     private javax.swing.JButton btnPacientes;
     private javax.swing.JButton btnPagos;
-    private javax.swing.JButton btnRecetas;
-    private javax.swing.JButton btnTratamiento;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel panelCabecera;
@@ -341,5 +314,6 @@ public class vtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel panelContenido;
     private javax.swing.JPanel panelNavegacion;
     private javax.swing.JTable tblCitasHoy;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }
