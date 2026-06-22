@@ -50,6 +50,7 @@ public class pnlPagos extends javax.swing.JPanel {
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(this::btnBuscarActionPerformed);
 
         tblPagos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -125,6 +126,25 @@ public class pnlPagos extends javax.swing.JPanel {
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnListarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        String nombreBuscado = txtNombre.getText();
+        DAO.DaoPago dao = new DAO.DaoPago();
+        java.util.List<Modelo.PagoModelo> listaPagos = dao.buscarPorNombre(nombreBuscado);
+
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tblPagos.getModel();
+        modelo.setRowCount(0);
+
+        for (Modelo.PagoModelo p : listaPagos) {
+            modelo.addRow(new Object[]{
+                p.getNombrePaciente(),
+                p.getMonto(),
+                p.getTipoPago(),
+                p.getFecha()
+            });
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
