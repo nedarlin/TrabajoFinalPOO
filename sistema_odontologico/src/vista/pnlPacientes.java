@@ -4,6 +4,17 @@
  */
 package vista;
 
+import DAO.DaoPacienteTratamiento;
+import Modelo.PacienteTratamiento;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author USUARIO
@@ -35,7 +46,7 @@ public class pnlPacientes extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Paciente");
 
@@ -82,21 +93,22 @@ public class pnlPacientes extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(269, 269, 269)
-                .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(94, 94, 94)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnListar)
-                .addGap(107, 107, 107)
+                .addGap(51, 51, 51)
                 .addComponent(btnRegistrar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
+                .addGap(49, 49, 49)
                 .addComponent(btnCita)
-                .addGap(74, 74, 74))
+                .addGap(127, 127, 127))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,10 +128,41 @@ public class pnlPacientes extends javax.swing.JPanel {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
+        frmRegistrarPaciente ventanaRegistro = new frmRegistrarPaciente();
+
+        ventanaRegistro.setSize(800, 600);
+        ventanaRegistro.setLocationRelativeTo(null);
+
+        ventanaRegistro.setVisible(true);
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
         // TODO add your handling code here:
+        try {
+            Connection con = Conexion.Conection.getConnection();
+            DaoPacienteTratamiento dao = new DaoPacienteTratamiento(con);
+
+            List<PacienteTratamiento> lista = dao.listarPacienteTratamiento();
+
+            DefaultTableModel modelo = new DefaultTableModel(
+                    new Object[]{"Nombre", "Alergias", "Tratamiento", "Fecha Inicio"}, 0
+            );
+
+            for (PacienteTratamiento pt : lista) {
+                modelo.addRow(new Object[]{
+                    pt.getNombrePaciente(),
+                    pt.getAlergias(),
+                    pt.getNombreTratamiento(),
+                    pt.getFechaInicio()
+                });
+            }
+
+            tblPaciente.setModel(modelo);
+
+            System.out.println("✅ Se cargaron " + lista.size() + " registros.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btnListarActionPerformed
 
 

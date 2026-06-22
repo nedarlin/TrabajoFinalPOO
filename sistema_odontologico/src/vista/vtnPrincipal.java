@@ -24,6 +24,8 @@ public class vtnPrincipal extends javax.swing.JFrame {
      */
     public vtnPrincipal() {
         initComponents();
+        setSize(1000, 600);
+        setLocationRelativeTo(null);
     }
 
     /**

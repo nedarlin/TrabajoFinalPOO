@@ -9,7 +9,10 @@ import Modelo.PacienteCita;
 import Conexion.Conection;
 import java.sql.Connection;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  *
@@ -36,7 +39,7 @@ public class pnlInicio extends javax.swing.JPanel {
         panelContenido = new javax.swing.JPanel();
         panelCabecera = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblNombre = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -58,13 +61,14 @@ public class pnlInicio extends javax.swing.JPanel {
         lblTitulo.setForeground(new java.awt.Color(0, 0, 0));
         lblTitulo.setText("Bienvenido");
 
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Nombre:");
+        lblNombre.setForeground(new java.awt.Color(0, 0, 0));
+        lblNombre.setText("Nombre:");
 
         btnBuscar.setBackground(new java.awt.Color(30, 42, 70));
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(this::btnBuscarActionPerformed);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
@@ -86,17 +90,19 @@ public class pnlInicio extends javax.swing.JPanel {
                         .addGap(20, 20, 20)
                         .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelCabeceraLayout.createSequentialGroup()
-                        .addGap(74, 74, 74)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
-                        .addComponent(btnBuscar))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCabeceraLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(panelCabeceraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelCabeceraLayout.createSequentialGroup()
+                                .addGap(74, 74, 74)
+                                .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(45, 45, 45)
+                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelCabeceraLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(8, 8, 8)
+                        .addGroup(panelCabeceraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnListar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(51, Short.MAX_VALUE))
         );
         panelCabeceraLayout.setVerticalGroup(
@@ -106,7 +112,7 @@ public class pnlInicio extends javax.swing.JPanel {
                 .addComponent(lblTitulo)
                 .addGap(18, 18, 18)
                 .addGroup(panelCabeceraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -160,12 +166,10 @@ public class pnlInicio extends javax.swing.JPanel {
 
             List<PacienteCita> lista = dao.listarPacienteCita();
 
-            // Crear modelo nuevo con columnas
             DefaultTableModel modelo = new DefaultTableModel(
                     new Object[]{"Fecha", "Nombre", "Motivo", "Estado"}, 0
             );
 
-            // Agregar filas
             for (PacienteCita pc : lista) {
                 modelo.addRow(new Object[]{
                     pc.getFechaRegistro(),
@@ -175,22 +179,73 @@ public class pnlInicio extends javax.swing.JPanel {
                 });
             }
 
-            // Asignar modelo a la JTable
             tblPacientes.setModel(modelo);
 
-            System.out.println("✅ Se cargaron " + lista.size() + " registros.");
+            System.out.println("Se listaron " + lista.size() + " los registros.");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnListarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        String nombre = txtNombre.getText().trim();
+
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Debes ingresar un nombre para buscar.",
+                    "Campo vacío",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            Connection con = Conexion.Conection.getConnection();
+
+            String sql = "SELECT p.nombres, p.fecha_registro, c.motivo_consulta, c.estado_cita "
+                    + "FROM paciente p INNER JOIN cita c ON p.id_paciente = c.id_paciente "
+                    + "WHERE p.nombres LIKE ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + nombre + "%");
+            ResultSet rs = ps.executeQuery();
+
+            DefaultTableModel modelo = new DefaultTableModel(
+                    new Object[]{"Fecha", "Nombre", "Motivo", "Estado"}, 0
+            );
+
+            boolean encontrado = false;
+
+            while (rs.next()) {
+                modelo.addRow(new Object[]{
+                    rs.getString("fecha_registro"),
+                    rs.getString("nombres"),
+                    rs.getString("motivo_consulta"),
+                    rs.getString("estado_cita")
+                });
+                encontrado = true;
+            }
+
+            tblPacientes.setModel(modelo);
+
+            if (!encontrado) {
+                JOptionPane.showMessageDialog(this,
+                        "No existe ningún paciente con ese nombre.",
+                        "Paciente no encontrado",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnListar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel panelCabecera;
     private javax.swing.JPanel panelCentroDashboard;

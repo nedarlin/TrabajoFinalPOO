@@ -3,9 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/sistema_odontologico/src/vista/vtnPrincipal.java</file>
-            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/sistema_odontologico/src/vista/pnlTratamiento.java</file>
-            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/sistema_odontologico/src/controlador/Main.java</file>
+            <file>file:/C:/Users/Neil/OneDrive/Documentos/NetBeansProjects/sistema_odontologico/src/vista/vtnPrincipal.java</file>
+            <file>file:/C:/Users/Neil/OneDrive/Documentos/NetBeansProjects/sistema_odontologico/src/vista/pnlInicio.java</file>
+            <file>file:/C:/Users/Neil/OneDrive/Documentos/NetBeansProjects/sistema_odontologico/src/vista/pnlPacientes.java</file>
+            <file>file:/C:/Users/Neil/OneDrive/Documentos/NetBeansProjects/sistema_odontologico/src/vista/pnlInventario.java</file>
+            <file>file:/C:/Users/Neil/OneDrive/Documentos/NetBeansProjects/sistema_odontologico/src/vista/pnlPagos.java</file>
         </group>
     </open-files>
 </project-private>
